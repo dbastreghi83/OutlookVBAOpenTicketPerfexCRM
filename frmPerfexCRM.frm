@@ -15,8 +15,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Private Sub btnOpenTicket_Click()
-    PerfexCRM_OpenTicketPost txtSubject.Value, txtName.Value, txtEmail.Value, txtPriority.Value, txtMessage.Value, txtCC.Value
-    Me.Hide
+    Dim r As Boolean
+    r = PerfexCRM_OpenTicketPost(txtSubject.Value, txtEmail.Value, txtPriority.Value, txtMessage.Value)
+    If r Then Me.Hide
 End Sub
 
 Private Sub UserForm_Initialize()
