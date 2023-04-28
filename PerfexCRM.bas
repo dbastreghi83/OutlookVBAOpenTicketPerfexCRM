@@ -52,21 +52,19 @@ errLines:
     PerfexCRM_getContactInfo = 0
 End Function
 
-Sub PerfexCRM_OpenTicketPost(subject As String, name As String, email As String, priority As Integer, message As String, cc As String)
+Function PerfexCRM_OpenTicketPost(subject As String, name As String, email As String, priority As Integer, message As String, cc As String)
     Dim data As String
     Dim contactinfo As Variant
     Dim r As String
     
     contactinfo = PerfexCRM_getContactInfo(email)
-    If IsNumeric(contactinfo) Then Exit Sub
+    If IsNumeric(contactinfo) Then Exit Function
     
     data = "subject=" & subject
     data = data & "&department=" & CStr(default_departmentID)
     data = data & "&contactid=" & CStr(contactinfo(0))
     data = data & "&userid=" & CStr(contactinfo(1))
-    data = data & "&name=" & name
     data = data & "&email=" & email
-    data = data & "&cc=" & cc
     data = data & "&priority=" & CStr(priority)
     data = data & "&message=" & message
     
@@ -81,8 +79,10 @@ Sub PerfexCRM_OpenTicketPost(subject As String, name As String, email As String,
     objHTTP.Send data
     r = StrConv(objHTTP.responseBody, vbUnicode)
     MsgBox r
-    Exit Sub
+    PerfexCRM_OpenTicketPost = True
+    Exit Function
     
 errLines:
     MsgBox ("Cannot post the data. Check your connection or the PerfexCRM form URL. Response:" & r)
-End Sub
+    PerfexCRM_OpenTicketPost = False
+End Function
