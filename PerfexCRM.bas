@@ -14,10 +14,8 @@ Sub PerfexCRM_OpenTicket()
 
     With frmPerfexCRM
         .txtSubject.Value = Trim(otlMailItem.subject)
-        .txtName.Value = Trim(otlMailItem.Sender)
         .txtEmail.Value = otlMailItem.SenderEmailAddress
         .txtPriority.Value = priority
-        .txtCC.Value = Trim(otlMailItem.cc)
         .txtMessage.Value = Trim(otlMailItem.Body)
     End With
     
